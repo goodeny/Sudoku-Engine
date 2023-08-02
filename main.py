@@ -4,6 +4,8 @@ from sudoku_matriz import board
 from sudoku import Sudoku
 import keyboard
 import time
+import threading
+import os
 
 class App:
     def __init__(self):
@@ -15,6 +17,7 @@ class App:
         self.entries = []
         self.numbers = []
         self.solution = []
+        self.install_lib()
         self.create_logo()
         self.generate_buttons()
         self.windows_blocks()
@@ -55,10 +58,17 @@ class App:
             
     def create_button_solve(self):
         self.button_solve_img = PhotoImage(file='assets/button_solve.png')
-        self.button_solve = Button(self.window, image=self.button_solve_img, bg='#373941', activebackground='#373941', bd=0, command=self.generate_sudoku)
-        self.button_solve.place(x=620, y=600)
+        self.button_solve = Button(self.window, image=self.button_solve_img, bg='#373941', activebackground='#373941', bd=0, command=lambda: threading.Thread(target=self.generate_sudoku).start())
+        self.button_solve.place(x=620, y=580)
+
+    def create_button_solving(self):
+        self.button_solving_img = PhotoImage(file='assets/button_solving.png')
+        self.button_solving = Button(self.window, image=self.button_solving_img, bg='#373941', activebackground='#373941', bd=0)
+        self.button_solving.place(x=620, y=580)
 
     def generate_sudoku(self):
+        self.button_solve.destroy()
+        self.create_button_solving()
         board.clear()   
         self.numbers.clear()
         for i, entry in enumerate(self.entries):
@@ -73,7 +83,21 @@ class App:
 
         #print(self.entries)
         #print(board)
-        self.solve_sudoku()
+        if board == [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ]:
+            self.button_solving.destroy()
+            self.create_button_solve()
+        else:
+            self.solve_sudoku()
     
     def generate_buttons(self):
         x1=620
@@ -139,20 +163,35 @@ class App:
                 self.solution.append(y)
         #print(self.solution)
         self.fill_website()
+            
     
     def fill_website(self):
         time.sleep(3)
         count = 1
         for i in range(0,81):
-            time.sleep(0.3)
-            keyboard.press(f'{self.solution[i]}')
-            keyboard.press('right')
-            if count == 9:
-                keyboard.press('down')
-                for i in range(9):
-                    keyboard.press('left')
-                count = 0
-            count += 1
+            if keyboard.is_pressed('0'):
+                break
+            else:
+                time.sleep(0.3)
+                keyboard.press(f'{self.solution[i]}')
+                keyboard.press('right')
+                if count == 9:
+                    keyboard.press('down')
+                    for i in range(9):
+                        keyboard.press('left')
+                    count = 0
+                count += 1
+        self.button_solving.destroy()
+        self.create_button_solve()
+
+    def install_lib(self):
+        try:
+            print('Installing dependencies...\nDev by: Goodeny\nhttps://github.com/goodeny')
+            os.system('pip install py-sudoku')
+            os.system('pip install keyboard')
+        except:
+            pass
+
 
 if __name__ == "__main__":
     app = App()
