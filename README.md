@@ -1,6 +1,6 @@
 # Sudoku-Engine
 ## How to use:
-### 1 - Go to [https://sudoku.com]https://sudoku.com/ choose the difficulty and open the software.
+### 1 - Go to [https://sudoku.com], choose the difficulty and open the software.
 ### 2 - Puts the same sudoku numbers in the software and click "solve"
 ### 3 - Minimize the software, go to the page and wait the sudoku be completed
 ## IMPORTANT: while it is resolving, do not interfere with the keyboard
