@@ -1,3 +1,11 @@
+import os
+try:
+    print('Installing dependencies...\nDev by: Goodeny\nhttps://github.com/goodeny')
+    os.system('pip install py-sudoku')
+    os.system('pip install keyboard')
+except:
+    os.system('Try install "pip install py-sudoku"\n"pip install keyboard"\nDirect download: https://github.com/goodeny/Sudoku-Engine')
+
 from tkinter import *
 from sudoku_buttons import Buttons
 from sudoku_matriz import board
@@ -196,6 +204,7 @@ class App:
                 entry.delete(0,END)
         
     def fill_website(self):
+        self.fill_software()
         time.sleep(5)
         count = 1
         for i in range(0,81):
@@ -203,24 +212,22 @@ class App:
                 break
             else:
                 try:
-                    time.sleep(2/10)
+                    time.sleep(self.value_slider.get() / 10.0)
                     keyboard.press(f'{self.solution[i]}')
                     keyboard.press('right')
-                    print(count)
                     if count == 9:
                         keyboard.press('down')
                         for i in range(9):
+                            time.sleep(0.07)
                             keyboard.press('left')
-                            print(i)
                         count = 0
                     count += 1
                 except:
                     self.button_solving.destroy()
                     self.create_button_solve()
-        #self.fill_software()
         self.button_solving.destroy()
         self.create_button_solve()
-
+    
     def install_lib(self):
         try:
             print('Installing dependencies...\nDev by: Goodeny\nhttps://github.com/goodeny')
