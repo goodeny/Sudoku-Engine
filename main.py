@@ -1,6 +1,3 @@
-import os
-os.system('pip install py-sudoko')
-os.system('pip install keyboard')
 from tkinter import *
 from sudoku_buttons import Buttons
 from sudoku_matriz import board
@@ -206,19 +203,21 @@ class App:
                 break
             else:
                 try:
-                    time.sleep(self.value_slider.get() / 10.0)
+                    time.sleep(2/10)
                     keyboard.press(f'{self.solution[i]}')
                     keyboard.press('right')
+                    print(count)
                     if count == 9:
                         keyboard.press('down')
                         for i in range(9):
                             keyboard.press('left')
+                            print(i)
                         count = 0
                     count += 1
                 except:
                     self.button_solving.destroy()
                     self.create_button_solve()
-        self.fill_software()
+        #self.fill_software()
         self.button_solving.destroy()
         self.create_button_solve()
 
