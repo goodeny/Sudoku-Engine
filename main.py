@@ -1,3 +1,6 @@
+import os
+os.system('pip install py-sudoko')
+os.system('pip install keyboard')
 from tkinter import *
 from sudoku_buttons import Buttons
 from sudoku_matriz import board
